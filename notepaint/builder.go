@@ -8,6 +8,16 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
+type BuilderSpaces struct {
+	Padding float32
+}
+
+func NewBuilderSpaces() BuilderSpaces {
+	return BuilderSpaces{
+		Padding: 35,
+	}
+}
+
 type Builder struct {
 	initialOffset sdl.Point
 	instructions  []PaintInstructions
@@ -17,6 +27,8 @@ type Builder struct {
 	store  *GlyphStore
 	offset sdl.Point
 	hdpi   float32
+
+	Spaces BuilderSpaces
 }
 
 func NewBuilder(startingPoint sdl.Point, fontSize int) *Builder {
@@ -24,6 +36,7 @@ func NewBuilder(startingPoint sdl.Point, fontSize int) *Builder {
 		fontSize:      fontSize,
 		initialOffset: startingPoint,
 		instructions:  make([]PaintInstructions, 0),
+		Spaces:        NewBuilderSpaces(),
 	}
 }
 
@@ -63,7 +76,7 @@ func (p *Builder) addClef(symbol notation.Symbol) error {
 	p.moveUp((symbol.Clef.Line - 1) * 2)
 	char := GetClefGlyph(symbol.Clef.Type)
 
-	p.moveRight(20)
+	p.moveRight(p.Spaces.Padding)
 
 	clef, err := p.store.Draw(p, char)
 	if err != nil {
@@ -71,7 +84,7 @@ func (p *Builder) addClef(symbol notation.Symbol) error {
 	}
 
 	p.moveRightAbsolute(clef.W)
-	p.moveRightAbsolute(20)
+	p.moveRight(p.Spaces.Padding)
 
 	return nil
 }
@@ -86,7 +99,7 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 	}
 
 	p.moveRightAbsolute(head.W)
-	defer p.moveRight(20)
+	defer p.moveRight(p.Spaces.Padding)
 	if symbol.Note.Stem == notation.StemNone {
 		return nil
 	}
@@ -110,18 +123,20 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
+const SpaceSmall = 100
+
 func (p *Builder) addBarline(symbol notation.Symbol) error {
 	glyph := GetBarlineGlyph(symbol.Barline)
+
 	box, err := p.store.Draw(p, glyph)
 	if err != nil {
 		return err
 	}
 	p.moveRightAbsolute(box.W)
-	p.moveRight(1)
+	p.moveRight(p.Spaces.Padding)
 	return nil
 }
 
