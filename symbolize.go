@@ -8,7 +8,7 @@ import (
 func MeasuresToSymbols(measures []theory.Measure) []notation.Symbol {
 	symbols := make([]notation.Symbol, 0)
 	var previousClef theory.Clef
-	for _, measure := range measures {
+	for i, measure := range measures {
 		if previousClef != measure.Clef {
 			symbols = append(symbols, ClefToSymbol(measure.Clef))
 			previousClef = measure.Clef
@@ -20,14 +20,23 @@ func MeasuresToSymbols(measures []theory.Measure) []notation.Symbol {
 		for _, note := range measure.Notes {
 			symbols = append(symbols, NoteToSymbol(measure.Clef, note))
 		}
+		isLast := i == len(measures)+1
+		if !isLast {
+			symbols = append(symbols, BarlineToSymbol())
+		}
 	}
-	symbols = append(symbols, BarSymbol())
+
 	return symbols
 }
 
-func BarSymbol() notation.Symbol {
+func BarlineToSymbol() notation.Symbol {
+	var result notation.Barline
+	switch {
+	default:
+		result = notation.BarlineSimple
+	}
 	return notation.Symbol{
-		Bar: notation.BarSimple,
+		Barline: result,
 	}
 }
 

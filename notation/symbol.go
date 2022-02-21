@@ -12,20 +12,23 @@ type Symbol struct {
 	Position int
 	Clef     Clef
 	Note     Note
-	Bar      Bar
+	Barline  Barline
 }
 
 type SymbolType string
 
 const (
-	SymbolTypeClef SymbolType = "clef"
-	SymbolTypeNote SymbolType = "note"
+	SymbolTypeClef    SymbolType = "clef"
+	SymbolTypeNote    SymbolType = "note"
+	SymbolTypeBarline SymbolType = "bar"
 )
 
 func (s *Symbol) Type() SymbolType {
 	if s.Clef.Type != ClefTypeNone {
 		return SymbolTypeClef
 	}
-
+	if s.Barline != BarlineNone {
+		return SymbolTypeBarline
+	}
 	return SymbolTypeNote
 }

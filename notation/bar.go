@@ -1,9 +1,13 @@
 package notation
 
-type Bar int
+type Barline int
 
 const (
-	BarNone   Bar = 0
-	BarSimple Bar = 1
-	BarDouble Bar = 2
+	BarlineNone Barline = iota
+	BarlineSimple
+	BarlineDouble
+	BarlineFinal
+	BarlineRepeatBegin
+	BarlineRepeatEnd
+	BarlineRepeatBeginEnd
 )

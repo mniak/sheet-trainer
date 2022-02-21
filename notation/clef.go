@@ -7,8 +7,8 @@ type Clef struct {
 type ClefType int
 
 const (
-	ClefTypeNone = 0
-	ClefTypeG    = 1
-	ClefTypeF    = 2
-	ClefTypeC    = 3
+	ClefTypeNone ClefType = iota
+	ClefTypeG
+	ClefTypeF
+	ClefTypeC
 )

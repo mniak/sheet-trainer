@@ -135,6 +135,16 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 	return nil
 }
 
+func (p *Builder) addBar(symbol notation.Symbol) error {
+	glyph := GetBarlineGlyph(symbol.Barline)
+	box, err := p.store.Draw(p, glyph)
+	if err != nil {
+		return err
+	}
+	p.moveRightAbsolute(box.W)
+	return nil
+}
+
 func (p *Builder) moveUp(steps int) {
 	p.offset.Y -= int32(float32(steps) * float32(p.fontSize) / 8)
 }
@@ -157,6 +167,10 @@ func (p *Builder) AddSymbols(symbols []notation.Symbol) error {
 		switch s.Type() {
 		case notation.SymbolTypeClef:
 			if err := p.addClef(s); err != nil {
+				return err
+			}
+		case notation.SymbolTypeBarline:
+			if err := p.addBar(s); err != nil {
 				return err
 			}
 		default:

@@ -28,3 +28,12 @@ const (
 	NoteheadHalf  = '\uE0A3'
 	NoteheadBlack = '\uE0A4'
 )
+
+const (
+	BarlineSimple         = '\uE030'
+	BarlineDouble         = '\uE031'
+	BarlineFinal          = '\uE032'
+	BarlineRepeatBegin    = '\uE040'
+	BarlineRepeatEnd      = '\uE041'
+	BarlineRepeatBeginEnd = '\uE042'
+)
