@@ -59,27 +59,6 @@ func (p *Builder) drawTexture(glyph *Glyph) {
 	})
 }
 
-// func (p *Builder) overStaff(action func() error) error {
-// 	staffRect, err := p.staffGlyphs.Draw(p, rune(glyphs.Staff5LinesNarrow))
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	p.offset.X += staffRect.W
-// 	staffRect, err = p.staffGlyphs.Draw(p, rune(glyphs.Staff5LinesWide))
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	err = action()
-// 	if err != nil {
-// 		return err
-// 	}
-// 	p.offset.X += staffRect.W
-
-// 	return nil
-// }
-
 func (p *Builder) addClef(symbol notation.Symbol) error {
 	p.moveUp((symbol.Clef.Line - 1) * 2)
 	char := GetClefGlyph(symbol.Clef.Type)
@@ -142,6 +121,7 @@ func (p *Builder) addBarline(symbol notation.Symbol) error {
 		return err
 	}
 	p.moveRightAbsolute(box.W)
+	p.moveRight(1)
 	return nil
 }
 
