@@ -13,7 +13,7 @@ type GlyphStore struct {
 }
 
 func NewGlyphStore(fontSize int, color sdl.Color, renderer *sdl.Renderer) (*GlyphStore, error) {
-	font, err := ttf.OpenFont("/usr/share/fonts/OTF/Bravura.otf", fontSize)
+	font, err := ttf.OpenFont("./fonts/Bravura.otf", fontSize)
 	if err != nil {
 		return nil, err
 	}

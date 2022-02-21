@@ -9,11 +9,10 @@ const (
 )
 
 type Symbol struct {
-	Clef     Clef
-	NoteHead NoteHead
 	Position int
-	Stem     Stem
-	Flag     Flag
+	Clef     Clef
+	Note     Note
+	Bar      Bar
 }
 
 type SymbolType string

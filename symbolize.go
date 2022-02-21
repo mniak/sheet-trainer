@@ -5,14 +5,30 @@ import (
 	"trainer/theory"
 )
 
-func StaffToSymbols(staff theory.Staff) []notation.Symbol {
+func MeasuresToSymbols(measures []theory.Measure) []notation.Symbol {
 	symbols := make([]notation.Symbol, 0)
-	symbols = append(symbols, ClefToSymbol(staff.Clef))
-	// symbols[1] = TimeSignatureToSymbol(
-	for _, note := range staff.Notes {
-		symbols = append(symbols, NoteToSymbol(staff.Clef, note))
+	var previousClef theory.Clef
+	for _, measure := range measures {
+		if previousClef != measure.Clef {
+			symbols = append(symbols, ClefToSymbol(measure.Clef))
+			previousClef = measure.Clef
+		}
+		// if previousTimeSignature != measure.TimeSignature {
+		// 	symbols[1] = TimeSignatureToSymbol(...)
+		// 	previousTimeSignature = measure.TimeSignature
+		// }
+		for _, note := range measure.Notes {
+			symbols = append(symbols, NoteToSymbol(measure.Clef, note))
+		}
 	}
+	symbols = append(symbols, BarSymbol())
 	return symbols
+}
+
+func BarSymbol() notation.Symbol {
+	return notation.Symbol{
+		Bar: notation.BarSimple,
+	}
 }
 
 func ClefToSymbol(clef theory.Clef) notation.Symbol {
@@ -34,52 +50,20 @@ func ClefToSymbol(clef theory.Clef) notation.Symbol {
 
 func NoteToSymbol(clef theory.Clef, note theory.Note) notation.Symbol {
 	symbol := notation.Symbol{
-		NoteHead: notation.NoteheadHalf,
+		Note: notation.Note{
+			NoteHead: GetNoteHead(note.Duration),
+			Flag:     GetNoteFlag(note.Duration),
+		},
+		Position: GetNotePosition(clef, note.Pitch),
 	}
-
-	symbol.Position = GetNotePosition(clef, note.Pitch)
-	symbol.NoteHead = GetNoteHead(note.Duration)
-	symbol.Stem = GetNoteStem(note.Duration, symbol.Position)
-	symbol.Flag = GetNoteFlag(note.Duration)
+	symbol.Note.Stem = GetNoteStem(note.Duration, symbol.Position)
 	return symbol
 }
 
 func GetNotePosition(clef theory.Clef, pitch theory.Pitch) int {
-	var position int
-	switch clef.Type {
-	case theory.ClefTypeF:
-		position = int(clef.Line)*-2 - 10
-		break
-		// case theory.ClefTypeG:
-		// 	break
-		// case theory.ClefTypeC:
-		// 	break
-	}
-	position += pitch.Octave * 7
-	switch pitch.PitchClass {
-	case theory.C:
-		position += 0
-		break
-	case theory.D:
-		position += 1
-		break
-	case theory.E:
-		position += 2
-		break
-	case theory.F:
-		position += 3
-		break
-	case theory.G:
-		position += 4
-		break
-	case theory.A:
-		position += 5
-		break
-	case theory.B:
-		position += 6
-		break
-	}
-	return position
+	return (pitch.Octave()-clef.Pitch.Octave())*7 +
+		int(pitch.Step()-clef.Pitch.Step()) +
+		(clef.Line-1)*2
 }
 
 func GetNoteHead(duration theory.RhythmicValue) notation.NoteHead {

@@ -1,11 +1,5 @@
 package theory
 
-type Staff struct {
-	Clef          Clef
-	TimeSignature TimeSignature
-	Notes         []Note
-}
-
 type TimeSignature struct {
 	Beats int
 	Unit  RhythmicValue

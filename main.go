@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"trainer/theory"
+	"trainer/generators"
 
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
@@ -40,69 +40,9 @@ func main() {
 	program := NewProgram()
 	defer program.Free()
 
-	notes := GenerateNotes()
-	clef := theory.ClefBass
-	staff := theory.Staff{
-		Clef:  clef,
-		Notes: notes,
-	}
-	symbols := StaffToSymbols(staff)
+	measures := generators.ToArray(generators.Exercise1)
+	symbols := MeasuresToSymbols(measures)
 	program.Symbols = symbols
 	handle(program.Init(renderer))
 	handle(program.Run())
-}
-
-func GenerateNotes() []theory.Note {
-	pitch := theory.Pitch{
-		PitchClass: theory.D,
-		Octave:     3,
-	}
-	return []theory.Note{
-		{
-			Pitch:    pitch,
-			Duration: theory.Whole,
-		},
-
-		{
-			Pitch:    pitch,
-			Duration: theory.Half,
-		},
-		{
-			Pitch:    pitch,
-			Duration: theory.Half,
-		},
-
-		{
-			Pitch:    pitch,
-			Duration: theory.Quarter,
-		},
-		{
-			Pitch:    pitch,
-			Duration: theory.Quarter,
-		},
-		{
-			Pitch:    pitch,
-			Duration: theory.Quarter,
-		},
-		{
-			Pitch:    pitch,
-			Duration: theory.Quarter,
-		},
-
-		{
-			Pitch:    pitch,
-			Duration: theory.Half,
-		},
-		{
-			Pitch:    pitch,
-			Duration: theory.Quarter,
-		},
-		{
-			Pitch: theory.Pitch{
-				PitchClass: theory.B,
-				Octave:     2,
-			},
-			Duration: theory.Sixteenth,
-		},
-	}
 }

@@ -100,7 +100,7 @@ func (p *Builder) addClef(symbol notation.Symbol) error {
 func (p *Builder) addNote(symbol notation.Symbol) error {
 	p.moveUp(symbol.Position)
 
-	noteheadGlyph := GetNoteHeadGlyph(symbol.NoteHead)
+	noteheadGlyph := GetNoteHeadGlyph(symbol.Note.NoteHead)
 	head, err := p.store.Draw(p, noteheadGlyph)
 	if err != nil {
 		return err
@@ -108,7 +108,7 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 
 	p.moveRightAbsolute(head.W)
 	defer p.moveRight(20)
-	if symbol.Stem == notation.StemNone {
+	if symbol.Note.Stem == notation.StemNone {
 		return nil
 	}
 
@@ -122,7 +122,7 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 	p.moveRightAbsolute(stem.bounds.W / 2)
 	defer p.moveRightAbsolute(stem.bounds.W - (stem.bounds.W / 2))
 
-	if symbol.Flag == notation.FlagNone {
+	if symbol.Note.Flag == notation.FlagNone {
 		return nil
 	}
 
