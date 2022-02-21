@@ -24,10 +24,10 @@ type Program struct {
 
 func NewProgram() Program {
 	startPosition := sdl.Point{
-		X: 100,
-		Y: 100,
+		X: 0,
+		Y: 0,
 	}
-	fontSize := 90
+	fontSize := 50
 	return Program{
 		SpaceHeight:    10,
 		Symbols:        []notation.Symbol{},

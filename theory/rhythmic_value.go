@@ -10,3 +10,7 @@ const (
 	Sixteenth    RhythmicValue = 16
 	ThirtySecond RhythmicValue = 32
 )
+
+func (v RhythmicValue) Value() float32 {
+	return 1 / float32(v)
+}

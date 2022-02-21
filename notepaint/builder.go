@@ -9,12 +9,14 @@ import (
 )
 
 type BuilderSpaces struct {
-	Padding float32
+	Padding             float32
+	ProportionalSpacing float32
 }
 
 func NewBuilderSpaces() BuilderSpaces {
 	return BuilderSpaces{
-		Padding: 35,
+		Padding:             35,
+		ProportionalSpacing: 200,
 	}
 }
 
@@ -42,9 +44,9 @@ func NewBuilder(startingPoint sdl.Point, fontSize int) *Builder {
 
 func (p *Builder) Init(renderer *sdl.Renderer) error {
 	noteColor := sdl.Color{
-		R: 127,
-		G: 127,
-		B: 255,
+		R: 0,
+		G: 0,
+		B: 0,
 		A: 255,
 	}
 
@@ -91,6 +93,10 @@ func (p *Builder) addClef(symbol notation.Symbol) error {
 
 func (p *Builder) addNote(symbol notation.Symbol) error {
 	p.moveUp(symbol.Position)
+
+	proportional := symbol.Note.Duration * p.Spaces.ProportionalSpacing
+	p.moveRight(proportional)
+	defer p.moveRight(proportional)
 
 	noteheadGlyph := GetNoteHeadGlyph(symbol.Note.NoteHead)
 	head, err := p.store.Draw(p, noteheadGlyph)

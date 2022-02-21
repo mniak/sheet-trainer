@@ -62,6 +62,7 @@ func NoteToSymbol(clef theory.Clef, note theory.Note) notation.Symbol {
 		Note: notation.Note{
 			NoteHead: GetNoteHead(note.Duration),
 			Flag:     GetNoteFlag(note.Duration),
+			Duration: note.Duration.Value(),
 		},
 		Position: GetNotePosition(clef, note.Pitch),
 	}

@@ -24,8 +24,8 @@ func main() {
 
 	window, err := sdl.CreateWindow("test",
 		sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED,
-		800, 600,
-		sdl.WINDOW_SHOWN)
+		1920, 1080,
+		sdl.WINDOW_SHOWN|sdl.WINDOW_FULLSCREEN)
 	handle(err)
 	defer window.Destroy()
 
