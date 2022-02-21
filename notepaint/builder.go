@@ -135,7 +135,7 @@ func (p *Builder) addNote(symbol notation.Symbol) error {
 	return nil
 }
 
-func (p *Builder) addBar(symbol notation.Symbol) error {
+func (p *Builder) addBarline(symbol notation.Symbol) error {
 	glyph := GetBarlineGlyph(symbol.Barline)
 	box, err := p.store.Draw(p, glyph)
 	if err != nil {
@@ -170,7 +170,7 @@ func (p *Builder) AddSymbols(symbols []notation.Symbol) error {
 				return err
 			}
 		case notation.SymbolTypeBarline:
-			if err := p.addBar(s); err != nil {
+			if err := p.addBarline(s); err != nil {
 				return err
 			}
 		default:
