@@ -3,7 +3,7 @@ module trainer
 go 1.17
 
 require (
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	github.com/veandco/go-sdl2 v0.4.16
 	gotest.tools v2.2.0+incompatible
 )
