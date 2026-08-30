@@ -3,8 +3,8 @@ module trainer
 go 1.17
 
 require (
-	github.com/stretchr/testify v1.7.1
-	github.com/veandco/go-sdl2 v0.4.20
+	github.com/stretchr/testify v1.12.1
+	github.com/veandco/go-sdl2 v0.4.40
 	gotest.tools v2.2.0+incompatible
 )
 
@@ -13,5 +13,6 @@ require (
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
